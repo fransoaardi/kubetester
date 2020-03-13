@@ -31,7 +31,7 @@ func main(){
 
 		//resolver.SetDefaultScheme("dns")
 
-		conn, err := grpc.Dial("dns:///grpc-svc:443",
+		conn, err := grpc.Dial("dns:///grpc-svc:7000",
 			grpc.WithInsecure(), grpc.WithBalancerName("round_robin"))
 
 		//conn, err := grpc.Dial("localhost:8000",
