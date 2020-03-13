@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellogrpc
+  labels:
+    app: hello
+    tier: grpc
+    track: stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+      tier: grpc
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: grpc
+        track: stable
+    spec:
+      containers:
+        - name: hellogrpc
+          image: fransoaardi/hellogrpc:v1
+          ports:
+            - containerPort: 8000

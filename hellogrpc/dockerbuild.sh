@@ -1,0 +1,1 @@
+docker build --tag fransoaardi/hellogrpc:v1 .

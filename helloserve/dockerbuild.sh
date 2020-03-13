@@ -1,0 +1,1 @@
+docker build --tag fransoaardi/helloserve:v1 .
