@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: serve-svc
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: hello
     tier: serve
