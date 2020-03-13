@@ -4,11 +4,12 @@ kind: Service
 metadata:
   name: grpc-svc
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: hello
     tier: grpc
     track: stable
   ports:
     - protocol: TCP
-      port: 8000
+      port: 80
+      targetPort: 8000

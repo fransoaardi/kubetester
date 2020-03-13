@@ -4,11 +4,12 @@ kind: Service
 metadata:
   name: http-svc
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: hello
     tier: http
     track: stable
   ports:
     - protocol: TCP
-      port: 8100
+      port: 80
+      targetPort: 8100
