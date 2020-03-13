@@ -32,15 +32,15 @@ func main() {
 	}
 }
 
-func (*helloServer) SayHello(ctx context.Context, in *pb.Greeting) (*pb.Introduction, error){
+func (*helloServer) SayHello(ctx context.Context, in *pb.Greeting) (*pb.Introduction, error) {
 	version := "v1-hellogrpc"
 	hostname, _ := os.Hostname()
 
 	name := in.Name
 	out := pb.Introduction{
-		Name:                 name,
-		Version:              version,
-		Hostname:             hostname,
+		Name:     name,
+		Version:  version,
+		Hostname: hostname,
 	}
 
 	return &out, nil

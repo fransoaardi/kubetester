@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -14,32 +13,28 @@ import (
 	"google.golang.org/grpc"
 )
 
-type Output struct{
-	Name string `json:"name"`
-	Version string `json:"version"`
-	Hostname string `json:"hostname"`
+type Output struct {
+	Name     string      `json:"name"`
+	Version  string      `json:"version"`
+	Hostname string      `json:"hostname"`
 	Response interface{} `json:"response"`
 }
 
-func main(){
+func main() {
 	mux := http.NewServeMux()
 	version := "v1-helloserve"
 	hostname, _ := os.Hostname()
 
-	mux.HandleFunc("/hellogrpc", func(w http.ResponseWriter, r *http.Request){
+	mux.HandleFunc("/hellogrpc", func(w http.ResponseWriter, r *http.Request) {
 		name := r.URL.Query().Get("name")
 
-		//resolver.SetDefaultScheme("dns")
-
-		conn, err := grpc.Dial("dns:///grpc-svc:7000",
-			grpc.WithInsecure(), grpc.WithBalancerName("round_robin"))
+		conn, err := grpc.Dial("dns:///grpc-svc:8000",
+			grpc.WithInsecure(), grpc.WithBlock(), grpc.WithBalancerName("round_robin"))
 
 		//conn, err := grpc.Dial("localhost:8000",
 		//	grpc.WithInsecure(), grpc.WithBlock(), grpc.WithBalancerName("round_robin"))
 
-		fmt.Println("1", err)
 		if err != nil {
-			log.Printf("did not connect: %v\n", err)
 			fmt.Printf("did not connect: %v\n", err)
 		}
 
@@ -54,16 +49,14 @@ func main(){
 		greeting.Name = name
 
 		introduction, err := c.SayHello(ctx, &greeting)
-		fmt.Println("2", err)
 		if err != nil {
-			log.Println(err)
 			fmt.Println(err)
 		}
 
 		out := Output{
-			Name: name,
-			Version: version,
-			Hostname:hostname,
+			Name:     name,
+			Version:  version,
+			Hostname: hostname,
 			Response: introduction,
 		}
 
@@ -72,8 +65,6 @@ func main(){
 	})
 
 	mux.HandleFunc("/hellohttp", func(w http.ResponseWriter, r *http.Request) {
-
-
 		name := r.URL.Query().Get("name")
 
 		cli := http.Client{}
@@ -91,9 +82,9 @@ func main(){
 		json.Unmarshal(read, &respBody)
 
 		out := Output{
-			Name: name,
-			Version: version,
-			Hostname:hostname,
+			Name:     name,
+			Version:  version,
+			Hostname: hostname,
 			Response: respBody,
 		}
 
@@ -102,7 +93,7 @@ func main(){
 	})
 
 	server := http.Server{
-		Addr: "0.0.0.0:8200",
+		Addr:    "0.0.0.0:8200",
 		Handler: mux,
 	}
 

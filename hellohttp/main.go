@@ -6,16 +6,16 @@ import (
 	"os"
 )
 
-func main(){
+func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/hellohttp", func(w http.ResponseWriter, r *http.Request) {
 		version := "v1-hellohttp"
 		hostname, _ := os.Hostname()
 
 		name := r.URL.Query().Get("name")
-		type Introduction struct{
-			Name string `json:"name"`
-			Version string `json:"version"`
+		type Introduction struct {
+			Name     string `json:"name"`
+			Version  string `json:"version"`
 			Hostname string `json:"hostname"`
 		}
 		output := Introduction{
@@ -29,7 +29,7 @@ func main(){
 	})
 
 	server := http.Server{
-		Addr: "0.0.0.0:8100",
+		Addr:    "0.0.0.0:8100",
 		Handler: mux,
 	}
 
