@@ -17,9 +17,9 @@ type helloServer struct {
 }
 
 func main() {
-	lis, err := net.Listen("tcp", "localhost:8000")
+	lis, err := net.Listen("tcp", "0.0.0.0:8000")
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Printf("failed to listen: %v\n", err)
 	}
 
 	server := grpc.NewServer()

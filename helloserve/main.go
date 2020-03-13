@@ -10,9 +10,8 @@ import (
 	"os"
 	"time"
 
-	"google.golang.org/grpc"
-
 	pb "github.com/fransoaardi/helloserve/proto"
+	"google.golang.org/grpc"
 )
 
 type Output struct{
@@ -30,14 +29,18 @@ func main(){
 	mux.HandleFunc("/hellogrpc", func(w http.ResponseWriter, r *http.Request){
 		name := r.URL.Query().Get("name")
 
-		conn, err := grpc.Dial("grpc-svc.default.svc.cluster.local",
-			grpc.WithInsecure(), grpc.WithBlock(), grpc.WithBalancerName("round_robin"))
+		//resolver.SetDefaultScheme("dns")
+
+		conn, err := grpc.Dial("dns:///grpc-svc:443",
+			grpc.WithInsecure(), grpc.WithBalancerName("round_robin"))
 
 		//conn, err := grpc.Dial("localhost:8000",
 		//	grpc.WithInsecure(), grpc.WithBlock(), grpc.WithBalancerName("round_robin"))
 
+		fmt.Println("1", err)
 		if err != nil {
-			log.Fatalf("did not connect: %v", err)
+			log.Printf("did not connect: %v\n", err)
+			fmt.Printf("did not connect: %v\n", err)
 		}
 
 		defer conn.Close()
@@ -51,8 +54,10 @@ func main(){
 		greeting.Name = name
 
 		introduction, err := c.SayHello(ctx, &greeting)
+		fmt.Println("2", err)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			fmt.Println(err)
 		}
 
 		out := Output{
