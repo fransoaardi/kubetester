@@ -23,6 +23,7 @@ spec:
       containers:
         - name: helloserve
           image: fransoaardi/helloserve:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8200
           resources:

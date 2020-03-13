@@ -23,6 +23,7 @@ spec:
       containers:
         - name: hellohttp
           image: fransoaardi/hellohttp:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8100
           resources:

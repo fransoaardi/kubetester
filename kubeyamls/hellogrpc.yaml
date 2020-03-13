@@ -23,6 +23,7 @@ spec:
       containers:
         - name: hellogrpc
           image: fransoaardi/hellogrpc:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           resources:
