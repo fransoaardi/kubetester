@@ -102,6 +102,8 @@ $ ./restart.sh
 |`client`| -> | `serve-svc` | -> | `hello-serve` | -> | ( /hellohttp ) | -> | `hellohttp` |
 | | | | | | -> | ( /hellogrpc ) | -> | `hellogrpc` |
 
+![image](https://user-images.githubusercontent.com/34496756/76628501-29385b80-6580-11ea-947c-ec154e7db570.png)
+
 ## system architecture
 
 ### deployment
