@@ -25,3 +25,6 @@ spec:
           image: fransoaardi/hellogrpc:v1
           ports:
             - containerPort: 8000
+          resources:
+            requests:
+              cpu: 100m
